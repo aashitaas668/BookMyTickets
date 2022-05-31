@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Flight_Details(models.Model):
-    id = models.AutoField(primary_key=True)
     airport_id = models.ForeignKey(Airports)
     flight_number = models.IntegerField()
     airline_name = models.CharField(max_length=10)
@@ -22,7 +21,6 @@ class Flight_Details(models.Model):
         return self.flight_number + " " + self.date_of_arrival
 
 class User(AbstractUser):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
     email = models.EmailField(max_length=20)
     gender = models.CharField(max_length=20)
@@ -38,7 +36,6 @@ class User(AbstractUser):
         return self.firstname + " " + self.lastname
               
 class Booking(models.Model):
-    booking_id = models.CharField(max_length = 10)
     f_id = models.Foreignkey(Flight_Details)
     u_id = models.Foreignkey(User)
     p_id = models.Foreignkey(Passenger)
