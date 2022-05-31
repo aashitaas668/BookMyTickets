@@ -1,47 +1,60 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Flight_Details(models.Model):
-    flight_number = models.CharField(max_length=10)
-    flight_name = models.CharField(max_length=30)
+    id = models.AutoField(primary_key=True)
+    airport_id = models.ForeignKey(Airports)
+    flight_number = models.IntegerField()
+    airline_name = models.CharField(max_length=10)
     arrival_time = models.TimeField()
     departure_time = models.TimeField()
-    airline_name = models.CharField(max_length=10)
+    date_of_departure = models.DateField()
+    date_of_arrival = models.DateField()
     source = models.CharField(max_length=10)
     destination = models.CharField(max_length=10)
-    source_airport = models.CharField(max_length=10)
-    destination_airport = models.CharField(max_length=10)
-    flight_duration = models.IntergerField()
-    stops = models.IntegerField()
-    remaining_seats = models.IntegerField()
+    available_seats = models.IntegerField()
     total_seats = models.IntegerField()
     price = models.Charfield(max_length=10)
-    date_of_departure = models.DateField()
    
 
     def __str__(self):
-        return self.flight_number + " " + self.op_airline
+        return self.flight_number + " " + self.date_of_arrival
 
-class User(models.Model):
-    user_number = models.Charfield(max_length=10)
-    firstname = models.CharField(max_length=20)
-    lastname = models.CharField(max_length=20)
+class User(AbstractUser):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
     email = models.EmailField(max_length=20)
+    gender = models.CharField(max_length=20)
     phone = models.CharField(max_length=10)
     password = models.CharField(max_length=20)
+    state = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
+    country = models.Charfield(max_length=20)
+    Pincode = models.IntegerField()
     is_admin = models.BooleanField()
 
     def __str__(self):
         return self.firstname + " " + self.lastname
-        
-    class Meta:
-      abstract = True
+              
 class Booking(models.Model):
     booking_id = models.CharField(max_length = 10)
-    booking_date = models.DateField()
-    trip_date = models.Date_Field()
-    flight_number = models.ForeignKey(Flight, on_delete=models.CASCADE)
-    user_number = models.ForeignKey(Flight , on_delete=models.CASCADE)
-    number_of_passengers = models.IntergerField()
-    total_price = models.IntegerField()
-    passenger = models.OneToOneField(Passenger, on_delete=models.CASCADE)
+    f_id = models.Foreignkey(Flight_Details)
+    u_id = models.Foreignkey(User)
+    p_id = models.Foreignkey(Passenger)
+    booking_number = models.IntegerField()
+    pnr = models.IntegerField()
+    booking_time = TimeField()
+    
+class Airports(models.Model):
+    Airport_name = models.CharField(max_length = 10)
+    Country = models.CharField(max_length = 10 )
+    
+class Passenger:
+    name = models.CharField(max_lenght = 10 )
+    address = models.CharField(max_length = 10)
+    contact_number = models.Charfield(max_length = 10)
+    email_id = models.EmailField(max_length = 10)
+    Gender = models.CharField(max_length = 10)
+    Age = models.IntegerField()
+    user_id = models.Foreignkey(User)
