@@ -42,6 +42,7 @@ class Booking(models.Model):
     booking_number = models.IntegerField()
     pnr = models.IntegerField()
     booking_time = TimeField()
+    number_of_passengers = models.IntegerField()
     
 class Airports(models.Model):
     Airport_name = models.CharField(max_length = 10)
