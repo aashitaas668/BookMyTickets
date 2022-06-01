@@ -1,18 +1,26 @@
 from rest_framework import serializers
-from .models import Flight, Passenger, Reservation
+from rest_framework.validators import UniqueValidator
+from django.contrib.auth.models import User
 
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+            required=True,
+            validators=[UniqueValidator(queryset=User.objects.all())]
+            )
+    name = serializers.CharField(
+            validators=[UniqueValidator(queryset=User.objects.all())]
+            )
+    password = serializers.CharField(min_length=8)
+    
+    phone = serializers.PhoneNumberField()
+    
+    gender = 
 
-class FlightSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        user = User.objects.create_user(validated_data['username'], validated_data['email'],
+             validated_data['password'])
+        return user
+
     class Meta:
-        model = Flight
-        fields = '__all__'
-
-class PassengerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Passenger
-        fields = '__all__'
-
-class ReservationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Reservation
-        fields = '__all__'
+        model = User
+        fields = ('id', 'username', 'email', 'password')

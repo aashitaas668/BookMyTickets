@@ -21,19 +21,16 @@ class flight_Details(models.Model):
         return self.flight_number + " " + self.date_of_arrival
 
 class user(AbstractUser):
-    name = models.CharField(max_length=20)
-    email = models.EmailField(max_length=20)
     gender = models.CharField(max_length=20)
     phone = models.CharField(max_length=10)
-    password = models.CharField(max_length=20)
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
     country = models.Charfield(max_length=20)
-    Pincode = models.IntegerField()
+    pincode = models.IntegerField()
     is_admin = models.BooleanField()
 
     def __str__(self):
-        return self.firstname + " " + self.lastname
+        return self.first_name + " " + self.last_name
               
 class booking(models.Model):
     f_id = models.Foreignkey(flight_Details)
@@ -57,6 +54,6 @@ class passenger:
     Age = models.IntegerField()
     user_id = models.Foreignkey(user)
     
-class passenger_Booking:
+class passenger_booking:
     booking = models.ForeignKey(booking)
     passenger = models.ManyToManyField(passenger)
