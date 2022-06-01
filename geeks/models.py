@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class flight_Details(models.Model):
+class flight_details(models.Model):
     airport_id = models.ForeignKey(airports)
     flight_number = models.IntegerField()
     airline_name = models.CharField(max_length=10)
@@ -42,16 +42,16 @@ class booking(models.Model):
     number_of_passengers = models.IntegerField()
     
 class airports(models.Model):
-    Airport_name = models.CharField(max_length = 10)
-    Country = models.CharField(max_length = 10 )
+    airport_name = models.CharField(max_length = 10)
+    country = models.CharField(max_length = 10 )
     
 class passenger:
     name = models.CharField(max_lenght = 10 )
     address = models.CharField(max_length = 10)
     contact_number = models.Charfield(max_length = 10)
     email_id = models.EmailField(max_length = 10)
-    Gender = models.CharField(max_length = 10)
-    Age = models.IntegerField()
+    gender = models.CharField(max_length = 10)
+    age = models.IntegerField()
     user_id = models.Foreignkey(user)
     
 class passenger_booking:
