@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class Flight_Details(models.Model):
-    airport_id = models.ForeignKey(Airports)
+class flight_Details(models.Model):
+    airport_id = models.ForeignKey(airports)
     flight_number = models.IntegerField()
     airline_name = models.CharField(max_length=10)
     arrival_time = models.TimeField()
@@ -20,7 +20,7 @@ class Flight_Details(models.Model):
     def __str__(self):
         return self.flight_number + " " + self.date_of_arrival
 
-class User(AbstractUser):
+class user(AbstractUser):
     name = models.CharField(max_length=20)
     email = models.EmailField(max_length=20)
     gender = models.CharField(max_length=20)
@@ -35,24 +35,28 @@ class User(AbstractUser):
     def __str__(self):
         return self.firstname + " " + self.lastname
               
-class Booking(models.Model):
-    f_id = models.Foreignkey(Flight_Details)
-    u_id = models.Foreignkey(User)
-    p_id = models.Foreignkey(Passenger)
-    booking_number = models.IntegerField()
+class booking(models.Model):
+    f_id = models.Foreignkey(flight_Details)
+    u_id = models.ManyToManyField(user)
+    p_id = models.Foreignkey(passenger)  
+    #booking_number = models.IntegerField()
     pnr = models.IntegerField()
     booking_time = TimeField()
     number_of_passengers = models.IntegerField()
     
-class Airports(models.Model):
+class airports(models.Model):
     Airport_name = models.CharField(max_length = 10)
     Country = models.CharField(max_length = 10 )
     
-class Passenger:
+class passenger:
     name = models.CharField(max_lenght = 10 )
     address = models.CharField(max_length = 10)
     contact_number = models.Charfield(max_length = 10)
     email_id = models.EmailField(max_length = 10)
     Gender = models.CharField(max_length = 10)
     Age = models.IntegerField()
-    user_id = models.Foreignkey(User)
+    user_id = models.Foreignkey(user)
+    
+class passenger_Booking:
+    booking = models.ForeignKey(booking)
+    passenger = models.ManyToManyField(passenger)
