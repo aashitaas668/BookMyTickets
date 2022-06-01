@@ -3,20 +3,20 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class flight_details(models.Model):
-    airport_id = models.ForeignKey(airports)
+    #airport_id = models.ForeignKey(airports)
     flight_number = models.IntegerField()
     airline_name = models.CharField(max_length=10)
     arrival_time = models.TimeField()
     departure_time = models.TimeField()
     date_of_departure = models.DateField()
     date_of_arrival = models.DateField()
-    source = models.CharField(max_length=10)
-    destination = models.CharField(max_length=10)
+    source = models.ForeignKey(airports)
+    destination = models.ForeignKey(airports)
     available_seats = models.IntegerField()
     total_seats = models.IntegerField()
     price = models.Charfield(max_length=10)
+    pnr = models.IntegerField()
    
-
     def __str__(self):
         return self.flight_number + " " + self.date_of_arrival
 
@@ -35,15 +35,18 @@ class user(AbstractUser):
 class booking(models.Model):
     f_id = models.Foreignkey(flight_Details)
     u_id = models.ManyToManyField(user)
-    p_id = models.Foreignkey(passenger)  
-    #booking_number = models.IntegerField()
-    pnr = models.IntegerField()
+    #p_id = models.Foreignkey(passenger)  
+    booking_number = models.IntegerField()
+    #pnr = models.IntegerField()
+    ticket_number = models.IntegerField()
     booking_time = TimeField()
     number_of_passengers = models.IntegerField()
     
 class airports(models.Model):
     airport_name = models.CharField(max_length = 10)
     country = models.CharField(max_length = 10 )
+    city = models.CharField(max_length = 10)
+    state = models.CharField(max_length = 10)
     
 class passenger:
     name = models.CharField(max_lenght = 10 )
